@@ -1,0 +1,6 @@
+rootProject.name = 'test'
+
+include 'Client'
+include 'Service'
+rootProject.children.find { it.name == 'Service' }.name = 'test-service'
+rootProject.children.find { it.name == 'Client' }.name = 'test-client'

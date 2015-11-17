@@ -1,0 +1,24 @@
+apply plugin: 'spring-boot'
+
+springBoot {
+    mainClass = 'com.mycompany.example.Application'
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-jdbc"
+    compile "org.springframework.boot:spring-boot-starter-integration"
+    compile "org.springframework.integration:spring-integration-jdbc"
+    compile "org.springframework.data:spring-data-cassandra:${spring.data.version}"
+    compile "org.springframework.hateoas:spring-hateoas"
+    compile "org.apache.commons:commons-lang3:+"
+
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "org.spockframework:spock-core:${spock.version}"
+    testCompile "org.spockframework:spock-spring:${spock.version}"
+    testCompile "cglib:cglib-nodep:+"
+
+    compile "org.apache.httpcomponents:httpclient"
+    compile "com.jayway.jsonpath:json-path:+"
+    compile "com.hazelcast:hazelcast:+"
+}

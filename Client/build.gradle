@@ -1,0 +1,11 @@
+apply plugin: 'maven'
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Test Client'
+    }
+}
+
+repositories {
+    mavenLocal()
+}

@@ -1,0 +1,71 @@
+buildscript {
+    ext {
+        springBootVersion = '1.3.0.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+allprojects {
+    apply plugin: 'groovy'
+    apply plugin: 'idea'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    group = 'com.mycompany.'
+
+    ext {
+        spring = [data: [version: '1.3.0.RELEASE']]
+        spock = [version: '1.0-groovy-2.4']
+        groovy = [version: '2.4.5']
+        newRelic = [version: '3.13.0']
+        jackson = [version: '2.6.2']
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceSets {
+        main {
+            groovy {
+                srcDirs = ['src/main/groovy']
+            }
+        }
+    }
+
+    test {
+        include "**/*Test.*"
+        exclude "**/*TestBase.*"
+        exclude "**/*IntegrationTest.*"
+    }
+
+    configurations {
+        all*.exclude group: 'org.eclipse.persistence'
+        all*.exclude group: 'ch.qos.logback'
+        all*.exclude group: 'org.codehaus.jackson'
+        all*.exclude group: 'org.slf4j', module: 'log4j-over-slf4j'
+    }
+
+    dependencies {
+        compile "org.codehaus.groovy:groovy-all:${groovy.version}"
+        compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jackson.version}"
+        compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jackson.version}"
+        compile 'org.mockito:mockito-core:1.10.19'
+        compile 'com.jcabi:jcabi-log:0.16'
+    }
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '2.7'
+    }
+}
+
+project(':test-service') {
+    dependencies {
+        compile project(':test-client')
+    }
+}
